@@ -86,11 +86,7 @@ def printPasswordsAsTable(data):
     passwordInfo = data
     noOfPasswords = len(passwordInfo)
     border = ""
-    widthOfColumns = []
-
-    # Initialise the `widthOfColumns` list
-    for row in range(noOfHeaders):
-        widthOfColumns.append(0)
+    widthOfColumns = [0] * noOfHeaders
 
     # Add serial numbers at the beginning of each row of the table
     for row in range(1, noOfPasswords + 1):
@@ -116,13 +112,13 @@ def printPasswordsAsTable(data):
     # Print the headers (column titles) for different columns of the table
     print(border)
     for column in range(noOfHeaders):
-        print(f"| {headerLabels[column]}{" " * (widthOfColumns[column] - len(headerLabels[column]))}", end = " ")
+        print(f"| {headerLabels[column]}{' ' * (widthOfColumns[column] - len(headerLabels[column]))}", end = " ")
     print(f"|\n{border}")
 
     # Print the requested passwords along with all their information in the form of a table
     for row in range(noOfPasswords):
         for column in range(noOfHeaders):
-            print(f"| {passwordInfo[row][column]}{" " * (widthOfColumns[column] - len(passwordInfo[row][column]))}", end = " ")
+            print(f"| {passwordInfo[row][column]}{' ' * (widthOfColumns[column] - len(passwordInfo[row][column]))}", end = " ")
         print("|")
     print(border)
 

@@ -1,6 +1,5 @@
 #
 #  Password Manager.py
-#  Password Manager
 #
 #  Created by Yashdeep Singh Fauzdar on 02/12/24.
 #
@@ -88,13 +87,6 @@ def printPasswordsAsTable(data):
     border = ""
     widthOfColumns = [0] * noOfHeaders
 
-    # Add serial numbers at the beginning of each row of the table
-    for row in range(1, noOfPasswords + 1):
-        if len(str(row)) < 10:
-            passwordInfo[row - 1].insert(0, " " * (len(headerLabels[0]) - 1 - len(str(row))) + str(row) + ".")
-        else:
-            passwordInfo[row - 1].insert(0, str(row) + ".")
-
     # Get the width of all the columns of the table
     for row in range(noOfPasswords):
         for column in range(noOfHeaders):
@@ -103,6 +95,12 @@ def printPasswordsAsTable(data):
     for column in range(noOfHeaders):
         if len(headerLabels[column]) > widthOfColumns[column]:
             widthOfColumns[column] = len(headerLabels[column])
+    if len(str(noOfPasswords)) > widthOfColumns[0]-1:
+        widthOfColumns[0] = len(str(noOfPasswords)) + 1
+
+    # Add serial numbers at the beginning of each row of the table
+    for row in range(1, noOfPasswords + 1):
+        passwordInfo[row - 1].insert(0, " " * (widthOfColumns[0] - 1 - len(str(row))) + str(row) + ".")
 
     # Define the row-separator as a string, eg. +------------+---------+----------+--------------+
     for column in range(noOfHeaders):

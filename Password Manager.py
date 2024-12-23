@@ -89,13 +89,13 @@ def printPasswordsAsTable(data):
 
     # Get the width of all the columns of the table
     for row in range(noOfPasswords):
-        for column in range(noOfHeaders):
-            if len(passwordInfo[row][column]) > widthOfColumns[column]:
-                widthOfColumns[column] = len(passwordInfo[row][column])
+        for column in range(noOfHeaders - 1):# To compensate for missing `Serial No.` column in passwordInfo[row]
+            if len(passwordInfo[row][column]) > widthOfColumns[column + 1]:
+                widthOfColumns[column + 1] = len(passwordInfo[row][column])
     for column in range(noOfHeaders):
         if len(headerLabels[column]) > widthOfColumns[column]:
             widthOfColumns[column] = len(headerLabels[column])
-    if len(str(noOfPasswords)) > widthOfColumns[0]-1:
+    if len(str(noOfPasswords)) > widthOfColumns[0] - 1:
         widthOfColumns[0] = len(str(noOfPasswords)) + 1
 
     # Add serial numbers at the beginning of each row of the table
@@ -166,7 +166,7 @@ while True:
     db2 = {} # `db2` stores [passwordKey: lastModified]
 
     # Show menu and ask for input from the user
-    print("\n\nWhat do you want to do?\n\n1. Generate a Password\n2. Save a Password\n3. Update a Password\n4. View a Password\n5. Delete a Password\n6. Quit\n")
+    print("\n\nWhat do you want to do?\n\n1. Generate Password\n2. Save Password\n3. Update Password\n4. View Password\n5. Delete Password\n6. Quit\n")
     userChoice = input("Enter your choice: ")
     while not userChoice.isdigit() or int(userChoice) < 1 or int(userChoice) > 6: # The user entered unsupported value as his choice
         userChoice = input("Please select from 1 to 6: ")
@@ -176,7 +176,7 @@ while True:
         db1 = load(dbFile)
         db2 = load(dbFile)
 
-    if userChoice == "1": # Generate a Password
+    if userChoice == "1": # Generate Password
 
         # Ask the length of the password to be generated
         lengthOfPassword = input("\n\nEnter the length of the password that you want to create (a whole number between 8 and 32): ")
@@ -221,7 +221,7 @@ while True:
                 dump(db2, dbFile)
             print("\nPassword saved successfully.")
 
-    elif userChoice == "2": # Save a Password
+    elif userChoice == "2": # Save Password
 
         # Ask for password and keyword
         password = input("\n\nEnter the password that you want to save: ")
@@ -241,7 +241,7 @@ while True:
             dump(db2, dbFile)
         print("\nPassword saved successfully.")
 
-    elif userChoice == "3": # Update a Password
+    elif userChoice == "3": # Update Password
 
         if len(db1) == 0:
             print("\n\nNo password has been saved.")
@@ -277,7 +277,7 @@ while True:
             else:
                 print("\nNo password has been saved with this keyword.")
 
-    elif userChoice == "4": # View a Password
+    elif userChoice == "4": # View Password
 
         if len(db1) == 0:
             print("\n\nNo password has been saved.")
@@ -306,7 +306,7 @@ while True:
             else:
                 print("\nNo password has been saved with this keyword.")
 
-    elif userChoice == "5": # Delete a Password
+    elif userChoice == "5": # Delete Password
 
         if len(db1) == 0:
             print("\n\nNo password has been saved.")
